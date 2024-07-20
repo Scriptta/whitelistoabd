@@ -69,3 +69,5 @@ end
 function Audio:Stop()
     table.clear(Audio.Audios)
 end
+
+return Audio
