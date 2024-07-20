@@ -81,4 +81,4 @@ workspace.Effects.DescendantAdded:Connect(function(Object : Instance)
     end
 end)
 
-Audio:Play(9042632936, 0, 1, 2.5)
+return Audio
