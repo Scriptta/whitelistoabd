@@ -1,15 +1,13 @@
--- this script was made by ipufo (bisbored)
-
--- settings 
+-- made by ipufo (bisbord)
 shared.settings = {
     soundDelay = 0.9
 }
 
-local Audio, Player, ReplicatedStorage, ContentProvider, RunService, Lighting = {
+local Audio, ContentProvider = {
     Audios = {}
-}, game.Players.LocalPlayer, game.ReplicatedStorage, game:GetService'ContentProvider', game:GetService'RunService', game.Lighting
+}, game:GetService'ContentProvider'
 
-function Audio:Play(Id, TimePosition, Pitch, Volume, Cframe, Looped)
+function Audio:Play(Id, TimePosition, Pitch, Volume, Loop, Cframe)
     local s
     if type(Id) == 'number' then
         s = Instance.new('Sound')
@@ -43,7 +41,7 @@ function Audio:Play(Id, TimePosition, Pitch, Volume, Cframe, Looped)
         end
         task.spawn(function()
             if timeLength >= shared.settings.soundDelay then
-                for i = 1, math.ceil((timeLength / shared.settings.soundDelay) / (Pitch or 1)) * if Looped then 9999 else 1 do
+                for i = 1, math.ceil((timeLength / shared.settings.soundDelay) / (Pitch or 1)) * if Loop then 9999 else 1 do
                     self.Audios['rbxassetid://' .. Id].Time = (tick() - otick) + TimePosition or 0
                     print(self.Audios['rbxassetid://' .. Id].Time)
                     if type(self.Audios['rbxassetid://' .. Id]) ~= nil and sup and 'i hope every single one of you die.' then
@@ -71,14 +69,3 @@ end
 function Audio:Stop()
     table.clear(Audio.Audios)
 end
-
-workspace.Effects.DescendantAdded:Connect(function(Object : Instance)
-    task.wait()
-    local self = Audio
-    if Object:IsA'Sound' and self.Audios[Object.SoundId] then
-        print('success', self.Audios[Object.SoundId].Time)
-        Object.TimePosition = self.Audios[Object.SoundId].Time
-    end
-end)
-
-return Audio
