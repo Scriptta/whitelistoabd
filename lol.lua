@@ -3,9 +3,9 @@ shared.settings = {
     soundDelay = 0.9
 }
 
-local Audio, ContentProvider = {
+local Audio, ContentProvider, Player, ReplicatedStorage, RunService = {
     Audios = {}
-}, game:GetService'ContentProvider'
+}, game:GetService'ContentProvider', game.Players.LocalPlayer, game.ReplicatedStorage, game:GetService('RunService')
 
 function Audio:Play(Id, TimePosition, Pitch, Volume, Loop, Cframe)
     local s
@@ -30,7 +30,7 @@ function Audio:Play(Id, TimePosition, Pitch, Volume, Loop, Cframe)
         self.Audios['rbxassetid://' .. Id] = {Time = 0}
         local function fireaudio()
             if (
-                not Lighting.TS.Value and
+                not game.Lighting.TS.Value and
                 Player.Character:FindFirstChildOfClass('Humanoid') and
                 Player.Character:FindFirstChild('HumanoidRootPart')
             ) then
@@ -69,5 +69,13 @@ end
 function Audio:Stop()
     table.clear(Audio.Audios)
 end
-
+    
+workspace.Effects.DescendantAdded:Connect(function(Object : Instance)
+    task.wait()
+    local self = Audio
+    if Object:IsA'Sound' and self.Audios[Object.SoundId] then
+        Object.TimePosition = self.Audios[Object.SoundId].Time
+    end
+end)
+    
 return Audio
