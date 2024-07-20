@@ -34,7 +34,7 @@ function Audio:Play(Id, TimePosition, Pitch, Volume, Loop, Cframe)
                 Player.Character:FindFirstChildOfClass('Humanoid') and
                 Player.Character:FindFirstChild('HumanoidRootPart')
             ) then
-                ReplicatedStorage.FOTPSDamage2:FireServer(Player.Character:FindFirstChildOfClass('Humanoid'), Cframe or Player.Character:FindFirstChild('HumanoidRootPart').CFrame * CFrame.new(0, -2, 0), 0, 0, Vector3.zero, math.huge, s.SoundId, Pitch or 1, Volume or 5)
+                ReplicatedStorage.CalculatedStrike:FireServer(Player.Character:FindFirstChildOfClass('Humanoid'), Cframe or Player.Character:FindFirstChild('HumanoidRootPart').CFrame * CFrame.new(0, -2, 0), 0, 0, Vector3.zero, math.huge, s.SoundId, Pitch or 1, Volume or 5)
             else
                 print('boop')
             end
